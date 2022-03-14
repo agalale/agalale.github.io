@@ -1,0 +1,77 @@
+# Moments (p.203)
+- Delta (1st moment). Usually hedged.
+- Gamma (2d moment). Large gamma means fast rebalancing. Delta-hedged portfolio makes money.
+- Skew (3d moment). Gamma/vega increases in the rally and decreases in the sell-off. Third moment bets are bets on correlation between the asset and its vol. A ratio "backspread" buys many otm and sells less atm making sure initial cash flow is positive.
+- Tails (4th moment). Positive 4h moment means gamma increases away from center (you can sleep calm in the night). Exposed are otm options and calendars. The bet is on volvol. 
+- Short American barrier hedged with a short vanilla increases in concavity close to barrier (5th mom > 0).
+- An installment option (5th order compound) require to analyse at least 9 moments for hedging stability
+- Volga (vomma) is zero atm for vanillas and vanishes deep in the wings.
+
+# Hedging
+- When short gamma, trader will usually hedge himself with stop losses.
+- As a rule of thumb if you increase volatility when Gamma
+is positive you will increase a contract’s value. At points of inflection in
+the option value (where Gamma is zero) the option value may hardly
+move. (Wilmott 2002 Cliquet)
+- Vol appears in the quadratic (gamma) term. Thus, hedging (model) vega we still have vol exposure through gamma!
+
+
+# Models
+- A perfect model would describe the co-dynamics of underlying, vanillas and the exotic. The main purposes are hedging and risk assessment.
+
+# Volatity
+- Short (atm) calendar is short vega and long gamma. Gamma reverses away from the money.
+- Second order vol trade reverses gamma somewhere on the map. Ex: call spread (long 102 call, short 106 call), ratio spread (long 102 call, short two 106 calls) -- opposite effect.
+
+# ForwardVol
+- Long call on atm call vega hedged by the underlying atm call is a straddle on volatility. It can be used to hedge extreme vega concavity of barriers. 
+- Variance swaps should be used as calibration instruments for cliquets, because they can be used in hedging. (Lorenzo Bergomi, Smile Dynamics II).
+- For FVA the spot-forward vol covariance is one of the main risks. It is offset by a hedge with S*ln(S) payoff calendar spread. Rebalancement only when sigma[T1,T2] changes. Similarly, cliquets are hedged with log contracts. In general, we seek a payoff whose vega will offset the vega on the contract. For F[S_T2/S_T2] contracts Vega is independent of t, for S_T1 F[S_T2/S_T1] Vega ~ S. For a portfolio of vanillas, rho(S) multiplies S^2 in Vega. The reason is that vanilla contracts are homogeneous in K and S: PV = Kf(S/K) and hence vega = K phi(S/K).
+
+# Lookbacks
+- Allow to sell for the max price during the period or buy for the min price. As a rule, twice as expensive as vanillas. Have one-sided gamma exposure: only when the spot is near the new max/min. Gamma looks like a smoothed heaviside.
+- Rollover option: each time the spot updates its min, the seller of the lookback call has to buy a call struck at this new min. The option is: original atm + "roll-down" spread (markup bonus). The call is thus more expensive for downwside skew (lower strikes more expensive), as the gamma is located low. This skew (3rd mom) exposure is impossible to hedge with vanillas.
+- Ladder options (discrete lookbacks, in increments of ~ 5 bp down) are cheaper, can be decomposed in a portfolio of KI options.
+- Arcsin law: reaching lows/highs in the beginning or end is more likely than in the middle.
+
+# SP500 Hedging Practice
+- Old days: roll 3m puts on 10% otm SPX, costs 2% of net assets
+- From 2006 : VIX calls 1m 7bp otm
+
+# Risk Reversals
+- Gamma flips the sign from pos to neg across one point.
+- Initially fences (otm call - put).
+- Abstractly, refers to asymmetric risk in position - the third moment.
+- European binary is a risk reversal.
+
+Negative carry in an asset: forward price for the period t+1 is higher than the forward price for the period t (the spot).
+
+# European binary
+- Dynamically hedged by a call spread, that's why mainly driven by the skew.
+- Non-hedgeable pin exposure (between the calls for short ttms). The pin exposure is statistically diversifiable in a boo of digitals with many strikes.
+
+# American binary
+- Bet on time, stopping time is what matters.
+- Concave vega (price is a concave function of vol). If vega is hedged (subtract the linear tangent function), we end up short volvol (4th moment). This is the worst thing can happen, as no compensation for this risk is given (unlike the skew - 3th moment).
+- As volatility rises, the stopping time shortens. We get a concave PL/vol if hedge with fixed duration. Need to hedge with  long volvol structure to compensate. 
+- Volatility vanishes at and beyond the strike. Vanillas are inconsistent with it.
+
+# Barriers
+- Barrier ~ embedded risk reversal. Risk reversal will hedge a barrier in most cases. We have long gamma in a rally and short gamma in the sell-off.
+- KO price saturates in vol as the barriers becomes effectively closer and lifetime shortens (shear effect of vol).
+- Term structure of vol matters (stopping time).
+- No skew. In this case 100/98 call with be hedged by 100 call short symmetric put giving flat exposure at 98.
+- Downside skew. To get zero price at barrier today, we need to take a more otm put. It will be above the pip call value and decays faster. The barrier call should be sold cheaper.
+- Options trading at different vols exhibit unequal time decay. Higher vols decay faster.
+- Put-call symmetry is a corollary of the reflection principle.
+- KO call: delta jumps at the barrier, delta is greater than for the call. Trader loses a lot if the market gaps the barrier.
+- KI call: delta jumps at the barrier as well. PV looks like to opposite piece-wise smooth options. 100/98 KI call is a device for using mean-reversion.
+- KO call: asset price saturates with volatility due to increasing probability of hitting the barrier. Vega is concave. For KI call vega will be convex.
+- Barrier vega + vanilla vega is concave in vol for long barrier (short KO or long KI).
+
+# Reverse Barriers
+- Typically priced abnormally low, have negative delta near the barrier, generally decay negatively.
+
+# Jumps
+- Markets do jump. Hence, perfect detlta hedging is impossible. Hence, markets are incomplete.
+- Preferences and not arbitrage determine prices. Arbitrage gives bounds.

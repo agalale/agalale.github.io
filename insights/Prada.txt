@@ -1,0 +1,201 @@
+AFML
+
+# 1.
+- A common error is to believe that feature analysts develop strategies. Instead, feature analysts collect and catalogue libraries of findings that can be useful to a multiplicity of stations.
+- Features may be discovered by a black box, but the strategy is developed in a white box. In particular, a theory must identify the economic mechanism that causes an agent to lose money to us. Is it a behavioral bias? Asymmetric information? Regulatory constraints?
+- Backtest results are communicated to management and not shared with anyone else
+- Amateurs develop individual strategies, believing that there is such a thing as a magical formula for riches. In contrast, professionals develop methods to mass-produce strategies.
+- Test features for normality, stationarity, homoscedasticity
+
+# 2. Data
+- Time bars oversample information during low-activity periods and undersample information during high-activity periods
+- Second, time-sampled series often exhibit poor statistical properties, like serial correlation, heteroscedasticity, and non-normality of returns. GARCH was developed to overcome this. GARCH models were developed, in part, to deal with the heteroscedasticity associated with incorrect sampling.
+- Tick bars: Sampling as a function of the number of transactions (e.g. 1000 ticks) exhibited desirable statistical properties.  Sampling as a function of trading activity allows us to achieve returns closer to IID Normal.
+- Many exchanges carry out an auction at the open and an auction at the close. This means that for a period of time, the order book accumulates bids and offers without matching them. When the auction concludes, a large trade is published at the clearing price, for an outsized amount. This auction trade could be the equivalent of thousands of ticks, even though it is reported as one tick
+- ETF trick: replace baskets, dividend/coupon-paying or rolling products with the value of 1$ invested (and reinvested cash flows) 
+- PCA weights: compute eigendirections of cov matrix of returns and load the minimum eigenvector portfolio by 100% weight
+
+## 2.5 Sampling features
+- SVM do not scale well with sample size. Algos achieve better accuracy when learning from relevant examples.
+! Subsample training data on event-driven bars (e.g. CUSUM filter on price series) and feed to an ML algo. Rolling standard deviation of returns will become less heteroscedastic
+- Place orders after an event takes place: structural break, extracted signal, microsctructural phenomena such as spike in vol, departure of a spread from equilibrium
+- CUSUM: multiple events are not triggered when signal hovews around, common flaw of popular signals such as Bollinger bands
+- Check BB signal at returns cusum events
+- Supremum-Augmented-Dickey-Fuller (SADF) departs from the prev. reset level is a possible sampling trigger
+
+# 3. Labeling
+- Meta-labeling: Train a {+/-} classifier to learn direction with a good recall (low unidentified opportunities). Then learn a {0,1} classifier to sort out false positives, increasing precision (true positives / all positives rate). This balances the f1 metric: harmonic average of recall and precision.
+- Use different models for rallies and sell-offs, both are driven by different factors.
+- Size positions propertly: high accuracy of small bets and poor accuracy on large bets will ruin you.
+
+
+# 4. Sample weights
+- Oversampling makes bootstrap inefficient, oversampling results from redundant, dependent observations
+- Features are not IID, how to deal with it? Different labels may depend on the same features. Concurrent labels are labels depending on at least one common return.
+  a. Estimate the number of labels depending on return from slice [t-1, t] for each t as c[t].
+  b. Estimate uniqueness of label y[i] at time t as u[i, t] = 1[i, t] / c[t].
+  c. Average uniqueness of label y[i] is it's average uniqueness for it's dependence period.
+- When total uniqueness is small: (a) labels are redundant, (b) in-bag are similar to out-of-bag. Built trees will be copies of a similar overfitted tree.
+- Set max_sample to a small value, to make sure labels are not sampled with a freq. higher than their uniqueness.
+? Should we sample with a probability proportional to uniqueness?
+- Use sequential bootstrap for bagging.
+- More unique labels and labels for large absolute returns need to be associated with higher training weights.
+- Drop "neutral" label as it can be implied from +/- labels with low confidence.
+- Weight labels by the absolute total log-return sum | r_t / c_t | during its lifespan
+- Use time weights: older observations are less relevant.
+- Use class weights to balance under/over-represented classes. Use class_weight='balanced' in sklearn, otherwise rare labels are treated as outliers. For bagging use class_weight='balanced_subsample': each in-bag sample will be rebalanced.
+
+# 5. Fractionally differentiated features
+- Differencing removes memory. Fractional differencing brings stationarity without losing memory.
+- Fractional differentiation of small order (d=0.35) gives stationarity while precerving ~99.5% correlation with the original series. Here d is chosen such that ADF statistic crosses the 95% confidence level. 
+- Distribution is no longer Gaussian as skewness and kurtosis come with memory
+
+
+# 6. Ensemble methods
+- Bootstrap aggregation (bagging): generate N training sets by random sampling **with replacement**, fit each estimator (in parallel) on its own set and take average of predictions/probabilities or major voting for classif. 
+- Bagging is only effective if average correlation is low, use e.g. sequential bootstrapping to achieve it (section 4)
+- Bagging can not turn weak classifier into strong, but it can reduce variance: goal is to reduce average correlation of averaged learners:
+  * Reduce observation redundancy for each classifier: if each obs. at t is labeled by ret between t and t+100, use 1% observations per bagged estimator (use sequential bootstrapping or weights as in section 4.5)
+  * Ignore out-of-bag accuracy, use StratifiedKFold (small k, large k is similar to out-of-bag) with no shuffling. Out-of-bag examples are very similar to in-bag, scores will be inflated
+- Random forest
+  * In addition subsamples attributes **without replacement** at each node
+  * RF does not reduce bias; many redundant observations will lead to overfitting
+- To fight RF overfitting:
+  * set small max_features to force discrepancy between trees
+  * early stopping: set min_weight_fraction_leaf to large value such as 5% so that out-of-bag accuracy converges to K-fold oos accuracy
+  ! RF fixes the size of bootstrapped samples to match the size of training set. Instead, train BaggingClassifier on DecisionTreeClassifier with max_samples equal to average uniqueness between samples
+  * Use BaggingClassifier on RandomForest
+  * Modify RF to use sequential bootstrapping instead of standard bootstrapping
+- Fit PCA on features to speed up calcs and reduce overfitting
+- Use balanced_subsample class_weight to avoid misclassifying minority classes
+## 6.5 Boosting
+- Idea:
+  * Generate testing set by randomly sampling examples with uniform weights and fit a classifier
+  * Give more weights to misclasified samples and repeat until N classifiers are produced with accuracy > 50%
+  * Average predictions by weighting classifiers according to their accuracy and dropping the ones with accuracy < 50%
+- Reduces both bias and variance, but can overfit (boosting addresses underfitting, bagging overfitting)
+## 6.7. Bagging for scalability
+- Algos such as SVM do not scale well with the sample size: feed 1 mio of observations, algo will take a while to converge and probably overfit or not find global min. Use bagging in such cases:
+ * Do early stopping of SVM though max_iter=1e5 or tol=1e-3
+ * For RF early stopping set small max_depth or setting min_weight_fraction_leaf
+- Bagging transforms large sequential tasks into many parallel
+
+# 7. Cross-validation.
+- CV will contribute to overfitting through hyper-parameter tuning
+- Purging: if a test sample falls between train samples and contains (p[t]-p[t-10]) feature, remove the [t-10] row from the training set.
+- Embargo: since financial features often incorporate series that exhibit serial correlation (like ARMA processes), we should eliminate from the training set observations that immediately follow an observation in the testing set.
+
+# 8. Feature selection
+- It takes 20 iterations of type data -> ML -> backtest on the same data to discover a <5% false positive strategy (standard significance level)
+- Are found features important over time or in some environments? Can regime switches be predicted?
+- Substitution effect: estimated importance of one features is reduced bu the presence of other related features.
+- Linear subst. effect (multi-collinearity) is addressed by applying PCA to the raw features.
+- Mean Decrease Impurity (MDI): fast explanatory-importance method for tree-based classifiers, in-sample.
+  * Does not address substitution effect (importance of identifal features will be halved).
+
+# 10. Bet sizing.
+- Even if the ML algo has high accuracy, poor bet sizing will loose money.
+- Average all active signals, instead of overriding.
+- Discretize bet sizes (d levels) to prevent overtrading.
+
+# 11. The dangers of backtesting
+- Use backtesting as a sanity check on bet sizing, turnover, resilience to costs, behaviour under scenarios
+- Common errors: forgetting fundings costs, margin calls (stop-out orders), confusing correlation with causation, high volume particiopation rate, delay after information has spread around the globe
+- Professionals fall for multiple testing ,selection bias, backtest overfitting
+- Feature importance is a research tool: unravels patters discovered by ML
+- Purpose of backtest is to discard models, not select
+- To deal with backtest overfitting:
+  * Derive algorithms for universes
+  * Apply bagging to prevent overfitting and reduce forecasting error variance. If bagging makes performance was, strategy is likely to be overfit to observation outliers
+  * Do not backtest until completing research
+  * Record all conducted backtest to deflate the Sharpe Ratio on the final backtest (account for selection bias)
+  ! Simulate scenarios rather than history (see 12)
+- Walk-forward is prone to overfit as no random sampling
+
+# 12. Backtesting through Cross-Validation
+- Simulation of scenarios that didn't happen in the past
+- WF disadvantages:
+  * Single scenario is tested (historical path), which is easily overfit. Feed data in reverse order (Walk-Backward): if performance deteriorates, there is overfitting
+  * Fixed sequence of scenarios is used (Jan 1, 2007 - Mar 15, 2009 mix of rallies and sell-offs that iwll train the strategy to be market neutral, with low confidence all each position, then long rally till Jan 1, 2017, with preponderance of buy forecasts)
+  * Initial decisions are taken on small portion of data, even if there is a warm-up period
+- Test on stress scenarios as 2008 crisis, dot-com bubble, taper tantrum, China scare (2015-2016), ...
+  * Test of Jan 1, 2008 - Dec 31, 2008 and train on Jan 1, 2009 - Jan 1, 2017, for example
+  * Historical accuracy not the goal
+  * Only one fold corresponds to historical sequence
+  * Leakage is possible, care needs to be taken (purging and embargoing)
+- CPCV (Combinatorial Purged Cross-Validation)
+
+   
+
+# 13. Backtesting on synthetic data
+- Can be applied to backtesting of trading rules. Instead of tuning during backtesting, derive them from the underlying stochastic process.
+
+# 14. Backtest statistics
+- GIPS: Global Investment Performance Standards, but metrics depend on ML strategies used
+- General:
+  * Time range: should cover comprehensive number of regimes
+  * Average AUM
+  * Capacity: largest AUM delivering target risk-return
+  * Leverage: Average dollar position / Average AUM
+  * Maximum dollar position / average AUM: strategy does not rely on extreme events
+  * Ratio longs / shorts for long/short strategies: must be close 0.5, or we haveposition bias.
+  * Freq. of bets per year (positions on the same side are same bet)
+  * Average holding period
+  * Annualized turnover: average dollar amount traded / average AUM
+  * Correlation to underlying: large means no added value
+- Performace:
+- Efficiency:
+  - Sharpe ration, PSR ( we want P(SR>1)~80% for given skew, kurtosis), DSR (accounts for multiple backtest overfitting)
+- Classification scores:
+  * Accuracy: true / all; (TP + TN) / (TP + TN + FP + FN)
+  * Precision: true positives / predicted positives: TP / (TP + FP)
+  * Recall: true positives / positives; TP / (TP + FN)
+  * F1 = harmonic mean of precision and recall: 2 * pr * re / (pr + re)
+  * negative log-loss: take into account not only accuracy, but probability as well
+- Attribution:
+  * For corp bond mamanger: duration, credit, liquidity, sector, ccy, sovereign, issuer... did my duration bet pay off? At which credit segments do I excel? Should I focus on my issuer selection skills?
+
+# 15. Understanding strategy risk
+- When to accept and when to reject a strategy? How to choose stop-loss, take-profit?
+- Strategy risk is different from portfolio risk. Is is the probability that we will be above the break-even precision (SR > 0).
+- To measure P(p < p_breakeven):
+  * Find pi+/- as E[pi[k] | pi[k] >/< 0]
+  * Sample freq * obs_years observations of p bootstrapping pi[k] as |k : pi[k] >0 | / |k|.
+  * Fit KDE to p and compute P ( p <= p_breakeven ) = int_{-infty}^p_breakeven kde(s) ds
+
+# 16. Machine learning asset allocation
+- MPT not applicable for large universes. 50 tickers require 5 years of daily data for invertible cov matrix, but cov. structure is non-stationary. Equally weighted poftfolios outperform out-of-sample. 
+
+###- Hierarchical Risk Parity: tree-like structure (asset_class/industry/size)
+
+# 17. Structural breaks.
+- Most profits are realized at structural breaks (e.g. mean rev -> momentum regime). How to identify a shift?
+- Chow type Dickey Fuller test:
+  * test H[0] = {delta=0} against H[1]={delta>1} using stat(t*)=delta/sigma_delta for regression specification y[t+1] = y[t] + delta * 1[t>=t*] y[t] + eps[t], where t* is the assumed break point from random walk to bubble
+  * Andrews: to deal with unknown t*, use sup[t0+tau<=t*<=T-tau] stat(t*)
+  * Only single break!
+- Supremum-Augmented Dickey-Fuller
+  * Fit y[t+1] = y[t} + alpha + beta * y[t] + sum[t-L<k<t] dy[k]
+  * stat[t] = sup[t0: t-t0>=h] beta[t0, t] / sigma_beta[t0, t]
+  * Test H[0]={beta<=0} against H[1]={beta>0}
+- Taking supremum is not robust, sensitive to outliers
+- Extract features from populations s[t] = { ADF[u], t0+tau<=u<=t-tau}:
+  * Q[t, p], p=0.95, robust mean of high ADF values
+  * Q[t, p+nu] - Q[t, p-nu], nu=0.025, robust dispersion of high ADF values
+  * Use quantiles instead of supremum for robustness: Quantile ADF (QADF)
+- Conditional ADF, f[x] be the sample distribution of s[t]
+ * K = int[Q[t, p],+inf] f[x] dx normalization
+ * C[t,q] = int[Q[t,p],+inf] x f[x] dx / K, centrality of right tail
+ * C'[t,q] = sqrt{ int[Q[t,p],+inf] (x - C[t,q])^2 f[x] dx / K } dispersion of right tail 
+  
+# 18. Entropy features.
+- ML algorithm may find that momentum bets are more profitable when prices carry little information, and that mean-reversion bets are more profitable when prices carry a lot of information.
+- Bubbles are formed in compressed (low entropy) markets.
+- Encode returns series:
+  * code = sign(ret): especially efficient if r[t] are sampled from price bars, i.e. |r[t]| approx. const
+  * if |ret[t]| has more values, use trade/volume bars (sample according to a subordinated stochastic process), to avoid large coding alphabet
+  * use one letter per quantile of r[t], but this will increase entropy readings
+  * assigm 0 to [min[r], min[r]+sigma], 1 to [min[r]+sigma, min[r]+2*sigma] and so on; rare codes with cause spikes in entropy readings
+
+$ 20. Multiprocessing
+- use mpPandasObj to speed up pandas

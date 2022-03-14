@@ -1,0 +1,358 @@
+# Joshi, The Concepts and practice
+## Chapter 1. Risk
+1.9.4. A gilt (gov bond) and a corporate bond have the same principal and the same coupons and coupon dates. How will their prices compare?
+[a] Gilts are less expensive since they are risk-free.
+1.9.5. A bond can be converted into a share of the issuer one year from now. How will its price compare to the price of a bond with the same principal and coupons which are not convertible?
+[a] It must be more expensive due to an embedded switch option.
+
+# Chapter 2. Pricing Methodologies and Arbitrage
+2.12.8. Show that if the current spot price is S[0], and the continuous compounding rate is r then a call and a put both struck at S[0]*exp(r*T) and expiring at time T are of equal value.
+2.12.9. Prove that zero is the optimal lower bound for a digital call option.
+
+# Chapter 3. Trees and Option pricing
+3.12.12. Prove that the price of a barrier option implied by a tree will always be less than the price of a vanilla option with the same parameters priced on the same tree.
+
+# Chapter 4. Practicalities READ IT FIRST!!!
+9.4.2. How does the graph of the Vega of a call option vary as a function of time to expiry?
+
+# Chapter 5. The Ito Calculus
+5.12.2. If the normal instantaneous volatility of an Ito diffusion X[t] does not depend on time, find a function f such that f(X[t]) has constant normal volatility. How unique is f?
+[!] This can be used to uniformize the grid when solving the PDE. This usually improves the convergence properties when using the finite differences.
+5.12.6. Show that S[t] is a solution of the Black-Scholes equation. Why should it be so?
+[a] It is a tradable security.
+5.12.7. Show that exp(r*t) is a solution of the Black-Scholes equation. Why should it be so?
+[a] It is a tradable security - continuously compounded money account.
+
+# Chapter 6. Risk Neutrality and Martingale Measures
+6.17.5. In general, how will increasing the dividend rate affect the price of a call option?
+[a] The dividend rate lowers the expected value of the stock in the risk-neutral measure. Thus, the call option will become cheaper.
+6.17.8. Price a derivative paying log(S[T]) on a non-dividend paying stock following Geometric Brownian motion.
+
+# Chapter 7. The Practical Pricing of a European Option
+7.10.4. Prove that antithetic sampling makes all the odd moments of a sample of normals equal to zero.
+7.10.6. An option pays 90-S[T], for S[t]<95. It pays -5 otherwise. Decompose into vanilla options.
+7.10.7. Suppose two smiles have the same implied vol at 100. One smile is downwards sloping and the other one is upwards sloping. How will the prices of digital calls struck at 100 compare?
+[a] The digital call is replicated by a call spread struck at 100: long 100.01, short 99.99. If there is an upwards skew, the digital call becomes more expensive.
+
+# Chapter 8. Continuous Barrier Options: MANY GOOD QUESTIONS, RETURN HERE
+8.11.1. If the price of a knock-in option plus the corresponding knock-out option is not equal to the price of the corresponding vanilla, construct an arbitrage portfolio.
+
+# Chapter 9. Multi-look Exotic options
+9.11.3. A max option pays the maximum value of the stock on a number of dates T[1], ..., T[n] at time T[n]. Describe how to price this option using PDE techniques and Monte Carlo.
+9.11.5. Show that the auxiliary variable PDE method can be used to price a discrete barrier option. 
+[a] One possibility to price a discrete barrier is by backward induction by solving an ordinary PDE between the barrier lok date.
+9.11.6. Discuss how a geometric mean Asian call option would be priced by the auxiliary variable method and by Monte Carlo (the geometric mean is the exponential of the average of the logs). Develop an analytic price. How will the price of a geometric mean Asian option compare to the price of an ordinary Asian?
+[!]
+9.11.7. Suppose an option pays the maximum value of spot minus the minimum value of spot across a number of dates. Discuss how to price this option using PDEs and Monte Carlo.
+[a] Add two auxiliary variables: one for the running minimum, one for the running maximum.
+9.11.8. Show that if the prices of discount bonds are a discreasing function of time to maturity then the implied continuous compounding rates across periods [T[j],T[j+1]] are always non-negative.
+
+# Chapter 10. Static Replication READ IT FIRST!!!
+10.9.4. Show that under the Black-Scholes model the pricing function satisfies
+  F(S,K,t,T)=F(S,K,0,T-t)=S/S[0]*F(S[0],K*S[0]/S,0,T-t)
+What relation is satisfied in the Black-Scholes model with time-dependent volatility?
+[!] This relationship leads to put-call symmetry. It is used to hedge a barrier option.
+
+# Chapter 11. Multiple Sources of Risk READ IT FIRST
+
+# Chapter 12. Options With Early Exercise Features
+12.9.3. Does put-call parity hold for American options, in general?
+12.9.6. An American-Asian call option pays the positive part of the running average value of spot across a discrete number of dates at the time of exercise. How would you price this option?
+12.9.7. The perpetual American call option is a call option that can be exercised at any time in the future and never expires. What will its value be in a positive-interest-rate world? What will its value be in a zero-interest-rate Black-Scholes?
+12.9.8. Suppose we have American options, A and B, and B has half the notional of A but is otherwise identical. Consider a portfolio, C, consisting of two contracts of type B. Show that it carries more rights than A. How will its price compare to the price of A?
+12.9.9. Suppose we have a forward contract with one year expiry with the additional property that either party can cancel the contract after six month. How much will this contract be worth?
+
+# Chapter 13. Interest Rate Derivatives
+13.7.5. Suppose 
+  0 = t[0]<t[1]<...<t[n],
+and the swap rate, X[j], runs from t[0] to t[j], for each j. Show that the discoun factors P(t[j]) can be deduced from the rates X[j]. Such rates are said to be co-initial.
+13.7.6. Suppose
+  0 = t[0]<t[1]<...<t[n],
+and the swap rate, X[j], runs from t[j] to t[n], for each j. Show that the discount facors P(t[j]) can be deduced from the rates X[j]. Such rates are said to be co-terminal.
+13.7.7. Show that the process for a swap rate is not log-normal if the underlying forward rates are log-normal.
+
+# Chapter 14. The Pricing of Exotic Interest Rate Derivatives
+
+# Chapter 15. Incomplete Markets and Jump-Diffusion Processes
+15.13.5. Develop a formula for the risk-neutral density of a stock in a jump-diffusion world.
+15.13.10. Suppose we wish to price an Asian option by Monte Carlo using a jump-diffusion model with log-normal jumps. If the option has N look-at dates, how many (pseudo-)random numbers will we need per path? What if the jumps are not log-normal?
+
+# Chapter 16. Stochastic Volatility
+16.10.1. Show that if spot and vol are uncorrelated then the risk-neutral density of spot can be written as an integral over log-normal densities. How would you use Monte Carlo to estimate this density?
+16.10.2. Which of the replication techniques of Chapter 10 can be applied when using a stochastic volatility model?
+16.10.4. Suppose a stock moves according to a stochastic volatility model and we Delta-hedge using a constant volatility. What will happen?
+
+# Chapter 17. Variance Gamma Models.
+17.8.1. Which of the replication techniques of Chapter 10 can be applied when pricing with a Variance Gamma model?
+17.8.2. Suppose we wish to price an Asian option with N look-at dates with a Variance Gamma model using Monte Carlo. How many (pseudo-)random numbers will we need per path?
+
+---------------------------------------------
+## Joshi. More Mathematical Finance
+-----------------------------------------------
+
+# Chapter 1. Optionality, Convexity and Volatility
+1.4. Show that the price of a call option in the Variance Gamma model increases with sigma.
+
+# Chapter 2. Where Does the Money Go?
+None
+
+# Chapter 3. The Bachelier Model
+None
+
+# Chapter 4. Deriving the Delta
+4.1. For which of the following models is the Delta equal to the probability that the stock finishes in the money in the stock measure? Heston, SABR, CEV, CGMY.
+4.2. Is the value of a barrier option homogeneous in spot and strike? It is homogeneous in spot, strike and barrier? Can we use these facts to derive formulas for Deltas?
+[a] The price is homogeneous in spot, strike and barrier. 
+
+# Chapter 5. Volatility Derivatives and Model-Free Dynamic Replication
+5.2. Construct the model-free replicating portfolio for a log pay-off in terms of vanilla options and the underlying.
+5.3. Run a hedging simulation for variance swaps in the Black-Scholes and Heston models. How do the variances of the simulations vary with time-step?
+
+# Chapter 14. The Brownian Bridge
+14.1. Suppose we implement a Monte Carlo simulation pricer using pseudo-random numbers with the incremental method. Now suppose we change the path generator to a Brownian bridge one. What difference will we see in terms of mean and variance?
+14.3. A geometric Brownian motion S[t] has drift r and volatility sigma. Its values at 0 and T are known. Compute the expected value of
+  (alpha*S+beta)*I(S[t]>H)
+for 0<t<T with alpha, beta, H positive constants. Apply this result to the pricing of range accruals.
+14.4. Suppose we have n correlated Brownian motions W[j,t]. What is the distribution of W[k,t] conditional on the values of W[j,T] with T>t?
+
+# Chapter 16. Pricing Continuous Barrier Options Using a Jump-Diffusion Model
+
+# Chapter 17. The Fourier-Laplace Transform and Option Pricing
+None
+
+# Chapter 19. What Are Market Models?
+19.3. Suppose we have a callable product. Is it possible for its value given a fixed exercise strategy to be discontinuous?
+
+# Chapter 20. Discounting in Market Models
+20.1. A ten-year bond pays a fixed rate coupon six-monthly. It is non-callable for the first year and callable six-monthly thereafter. If pricing via the LIBOR market model, how would you choose a numeraire to reduce variance?
+20.2. For which of the following coupon triggers can a swap be priced using a single step to the end in the LMM?
+- 2-year CMS,
+- Libor in arrears,
+- Libor.
+20.3. For which of the following coupon rates can a TARN be priced using a single step to the end in the LMM?
+- 2-year CMS,
+- Libor in arrears,
+- Libor.
+20.4.[P] Use the single-step method to price a TARN, a trigger swap and an auto-cap in the spot and terminal measures. In each case, compute the kurtorsis of the simulation.
+
+# Chapter 21. Drifts Again
+
+# Chapter 22. Adjoint and Automatic Greeks
+22.1. Suppose we are computing Deltas of an exotic interest rate derivative using finite differencing, the adjoint pathwise method, and the forwards method. How will the accuracies for a given number of paths compare?
+22.6.[P] Develop the adjoint pathwise method for the LMM if the rates are following normal processes instead of log-normal ones.
+22.7.[P] Develop the adjoint pathwise method for a local volatility Black-Scholes model for pricing Asian options.
+
+# Chapter 23. Estimating correlation for the Libor Market Model
+23.2. Obtain daily change historical interest rate data. Compute the historical correlation matrix across two five-year periods. Fit the methodologies of this chapter to the matrix for varying number of factors. Which methodology does the best job of predicting the correlation matrix across the second five years?
+23.3. Price an exotic interest rate derivative calibrated to caplets and co-terminal swaptions and vary the underlying correlation. What dependence do you find?
+
+# Chapter 24. Swap-Rate Market Models
+
+# Chapter 25. Calibrating Market Models
+25.1. Is negative volatility a a problem? Is negative variance a problem?
+
+# Chapter 26. Cross-Currency Market Models
+
+# Chapter 27. Mixture Models
+27.1. Construct a mixture model from two normals with different means but the same variance. What is the kurtosis?
+27.2. Construnt a mixture model from two normals with the same mean but different variances. What is the kurtosis?
+
+# Chapter 28. The Convergence of Binomial Trees
+
+
+# Chapter 29. Asymmetry in Option Pricing
+29.1. Construct an example where the cash-settled and physically settled prices for a call option are different.
+
+# Chapter 30. A Perfect Model?
+
+# Chapter 31. The Fundamental Theorem of Asset Pricing
+
+------------------------------------------------------	
+## Tan. Market Practice in Financial Modeling
+------------------------------------------------------
+
+# Chapter 3. Replication.
+1. Consider the Black-Scholes model. What is the gamma of a digital option with payoff 1(S[t]>K) at time T? Why would you not want to delta-hedge such an option?
+
+# Chapter 5. Local Volatility.
+
+# Chapter 6. Stochastic Volatility
+3. Consider a very steep skew. Would SABR always be able to fit this?
+
+# Chapter 7. Local Stochastic Volatility.
+5. Build a simple Monte Carlo framework based on stochastic vol. Convince yourself that the fair value strike of a vol swap is not very different from the at-the-money vol.
+
+# Chapter 11. Forward Volatility and Callability.
+3. Assume the following dynamics
+  dS[t] = mu*S[t]dt + sigma(S[t],t)S[t]dt
+for the underlying and deterministic interest rates r[t]. Suppose we want to delta hedge (via the Black-Scholes approach) an at-the-money call option. Construct the relevant replicating portfolio and determine its cost. Hence, explain why forward volatility is not so important for a simple call option.
+
+# Chapter 12. Funding and Bias
+2. Due to the huge supply of yen, the funding bias for USD/JPY is such that it is cheaper to borrow yen versus dollars. There is also a significant bias for dollars versus an emergency market currency, e.g. USD/BRL. Consider now a cross currency swap with one leg paying floating in yen (with no spread) and the other paying floating in Brazilian reais plus a spread s*. What would the fair value spread s* be?
+3. Consider a flat Libor discount curve given by D(0,T)=exp(-0.03*T). Suppose that the OIS discount curve is D(0,T)=exp(-0.029*T). Compute the swap rate (annual fixed coupons, semi-annual floating coupons) for different maturities (1Y, 5Y, 10Y, 30Y) and compare with that obtained via Libor discounting.
+
+[a]
+
+Fixed leg:
+K * sum_k dcf[k] * D(0, T[k], OIS) // annual
+= K * sum_{k>0} exp(-0.029*k)
+
+Floating leg:
+sum_i dcf[i] * D(0, T[i-1], OIS) E[Libor(T[i-1],T[i]) * D(T[i-1],T[i], OIS) | OIS(T[i-1])]
+= sum_i dcf[i] * E[Libor(T[i-1], T[i]) | OIS(T[i-1])] D(0, T[i], OIS(T[i]))
+= sum_i dcf[i] * (D(0, T[i-1], Libor)/D(0, T[i], Libor) - 1) * D(0, T[i], OIS(T[i]))
+= sum_{i>0} 0.5 * (exp(0.03*0.5) - 1) * exp(-0.029*i*0.5)
+
+
+4. Since we forecast based on Libor, the martingale equation only holds for risky discounting at the credit-worthiness of Libor counterparts. As such, OIS discounting induces a quanto correction. In the developed world, it is common for interest rates to be lowered in times of crisis to simulate growth. As such, what should the direction of the quanto correction be? (Note that this is just a theoretical question, since such a quanto correction is accounted for by market quotes which are based on Libor forecasting and OIS discounting).
+[a] During the crisis the spread widens and the rates are lowered, so that the correlation is negative. The quanto adjustment to the forward rates are thus positive. 
+5. Assume deterministic interest rates. Derive the quanto effect of having a stochastic funding spread assuming that the asset follows a standard log-normal process 
+  dX[t] = r[t]X[t]dt + sigma*X[t]dW[t]
+and the funding spread follows a Hull-White process with constant parameters:
+  ds[t] = k(theta[t]-s[t])dt + lambda*dZ[t]
+and dW[t]dZ[t]=rho*dt. Hence, see that if the correlation between the asset and the funding spread is zero, there is no quanto adjustment.
+
+-----------------------------------------------------
+## Hull. Options, Futures, and Other Derivatives
+-----------------------------------------------------
+
+# Chapter 3. Hedging Strategies Using Futures (p.73)
+3.2. Explain what is meant by basis risk when futures contracts are used for heding.
+[a] Basis is the difference between the spot price and the futures price.
+3.4. Under what circumstances does a minimum variance portfolio lead to no hedging at all?
+[a] When the coefficient of correlation between the futures price change and the price of the asset being hedged is zero.
+3.15. When the futures price of an asset is less than the spot price, long hedges are likely to be particularly attractive. Expain this statement.
+[a] Long hedge involes buying futures and selling the asset. AND????
+3.19. A futures contract is used for hedging. Explain why the daily settlement of the contract can give rise to cash-flow problems.
+
+# Chapter 10. Mechanics of Options Markets (p.227)
+
+# Chapter 11. Properties of Stock Options (p.248)
+11.4. Give two reasons why the early exercise of an Americal call option on a non-dividend paying stock is not optimal. The first reason should involve the time value of money. The second should apply even if interest rates are zero.
+11.13. Give an intuitive explanation of why the early exercise of an American put becomes more attractive as the risk-free rate increases and volatility decreases.
+
+[!] Early exercise of American calls
+- If the risk-free rate is negative and the interest on the strike is larger than the implicit put, buy the put and exercise the option.
+- If there is a large dividend payment next day.
+
+# Chapter 12. Trading Strategies Involving Options (p.269)
+None
+
+# Chapter 13. Binomial Trees (p.293)
+None
+
+# Chapter 15. The Black-Scholes-Merton Model (p. 346)
+15.2. The volatility of a stock price is 30% per annum. What is the standard deviation of the percentage price change in one trading day?
+[a] Variance is additive if the random variables are independent. This, the daily volatility is 30%/sqrt(252)~1.8%. 
+
+# Chapter 18. Futures Options and Black's Model (p.394)
+
+# Chapter 19. The Greek Letters (p.425)
+19.1. Explain how a stop-loss trading rule can be implemented for the writer of an out-of-the money call option. Why does it provide a relatively poor hedge?
+19.15. Under what circumstances is it possible to make a European option on a stock index both gamma neutral and vega neutral by adding a position in one other European option?
+19.21. Does a forward contract on a stock index have the same delta as the corresponding futures contract. Explain your answer.
+[a] Forward has the delta N(d[1]), futures has the delta N(d[1])*exp(r*T).
+
+# Chapter 20. Volatility Smiles (p.443)
+20.2. What volatility smile is observed for equities?
+[a] Downward sloping. For currencies it is a symmetrical smile.
+20.3. What volatility smile is likely to be caused by jumps in the underlying asset price? Is the pattern likely to be pronounced for a 2-year option than for a 3-month option?
+[a] Jumps make the tails of the return distribution more heavy. The pattern is more pronounced for a 3-month option, as summation tends to make the tails lighter. IS IT TRUE?
+20.11. Suppose that a central bank's policy is to allow an exchange rate to fluctuate between 0.97 and 1.03. What pattern of implied volatilities for options on the exchange rate would you expect to see?
+[a] The tails of the distribution are very thin. Implied volatilities show the inverse smile.
+20.12. Option traders sometimes refer to deep-out-of-the-money options as being options on volatility. Why do you think they do this?
+[a] The volatility can not decrease their value too much, but can increase their value significantly. 
+
+# Chapter 21. Basic Numerical Procedures (p. 489)
+21.3. Explain how the control variate technique is implemented when a tree is used to value American options.
+[a] Value the American and the European using the same tree. Set Amer = Amer_Tree+(Euro_BSM-Euro_Tree).
+21.15. How can the control variate approach improve the estimate of the delta of an Americal option when the tree approach is used?
+21.16. Suppose Monte Carlo simulation is being used to evaluation a European call option on a non-dividend-paying stock when the volatility is stochastic. How could the control variate and anthitetic variable technique be used to improve numerical efficiency? Explain why it is necessary to calculate six values of the option in each simulation trial when both the control variate and the antithetic variable technique are used.
+21.21. When do the boundary conditions for S=0 and S->inf affect the estimates of derivative prices in the explicit finite difference method? 
+[a] http://www.ericbenhamou.net/documents/Encyclo/Boundary%20conditions%20for%20option.pdf
+In general, option are not very sensitive to the boundary condition except for 
+barrier type option with the boundary very close to the barrier level. In this 
+case, it is very important to take a boundary condition well suited for the 
+problem as this option problem is extremely sensitive to the precision of the 
+boundary conditions. For instance, in the case of an up and out call, if the 
+boundary is not exactly at the barrier level and slightly above (in the case of a 
+moving barrier that may not always be coinciding with the grid points), it is 
+very important not to set the boundary point to zero for the nearest point from 
+the barrier but to introduce a fictitious point in order to perturbe less the 
+solution. In general boundary condition do not influence the stability of the numerical 
+scheme but rather its efficiency and speed to converge.
+
+# Chapter 26. Exotic Options (p.617)
+26.2. Describe the pay-off from a portfolio consisting of a floating loockback call and a floating loock-back put with the same maturity.
+[a] S[max] - S[min].
+26.8. Suppose that the strike price of an Americal call option on a non-dividend-paying stock grows at rate g. Show that if g is less than the risk-free rate, r, it is never optimal to exercise the call early.
+26.10. If a stock price follows a geometric Brownian motion, what process does A[t] follow where A[t] is the arithmetic average stock price between time zero and time t?
+26.11. Explain why delta hedging is easier for Asian options than for regular options.
+[a] Delta approaches zero as the time passes.
+26.14. What put-call parity relationship exists between the price of a European call on a call and a European put on a call? What put-call parity relationship exist between the price of a European call on a put and a European put on a put? 
+26.35. What is the relationship between a regular call option, a binary call option, and a gap call option?
+
+# Chapter 27. More on Models and Numerical Procedures (p.648)
+None
+
+# Chapter 28. Martingales and Measures (p.667)
+28.1. How is the market price of risk defined for a variable that is not the price of an investment asset?
+28.17. In what world is the futures price of the variable a martingale? In what world is the forward price of the variable is a martingale? Derive an expression for the difference between the drift of the futures price and the drift of the forward price in the traditional risk-neutral world.
+[a] The futures price is a martingale in the risk-neutral world. The T-forward price is the martingale in the world defined by the numeraire B(t,T). DIFFERENCE IND RIFTS?
+
+# Chapter 29. Interest Rate Derivatives: The Standard Market Models (p. 686)
+
+# Chapter 30. Convexity, Timing, and Quanto Adjustments (p.698)
+
+# Chapter 31. Equilibrium Models of the Short Rate (p.712)
+
+# Chapter 32. No-arbitrage Models of the Short Rate (p.715)
+
+# Chapter 33. HJM, LMM, and Multiple Zero Curves (p.755)
+33.5. What is the advantage of LMM over HJM?
+[a] HJM is expressed in terms of instantaneous forward rates and these are not directly observable in the market. It is difficult to calibrate the model to market prices of liquid instruments.
+33.6. Provide an intuitive explanation of why a ratchet cap increases in value as the number of factors increase.
+[a] In the ratchet cap the cap is equal to the previous Libor + spread. More factors decorrelate Libors.
+33.8. Explain why a sticky cap is more expensive than a similar ratched cap.
+[a] In the sticky cap the cap is equal to the previuous capped rate + spread. Compared to the ratchet cap, the strike is always less or equal.
+33.9. Explain why IOs and POs have opposite sensitivities to the rate of prepayments.
+33.10. "An option adjusted spread is analogous to the yield on a bond." Explain this statement.
+
+# Chapter 34. Swaps Revisited (p.770).
+34.2. Suppose that a swap specifies a fixed rate is exchanged for twice the LIBOR rate. Can the swap be valued using the "assume forward rates are realized" rule?
+
+# Chapter 35. Energy and Commodity Derivatives (p.787)
+35.3. Distinguish between the historical data and the risk-neutral approach to valuing a derivative. Under what circumstance do they give the same answer?
+[a] The two approaches give the same answer when the underlying market variable is not correlated with the stock market returns, so that all risks can be diversified away.
+35.5. Why is the price of electricity more volatile than of other energy sources?
+[a] In most cases it can not be stored (exception: hydro). Switching the production off can be impossible (nuclear) or costly.
+35.9. Would you expect the volatility of the 1-year forward price of oil to be greater than or less than the volatility of the spot price? Explain your answer.
+35.10. What are the characteristics of an energy source where the price has a very high volatility and a very high rate of mean reversion? Give an example of such an energy source.
+
+# Chapter 36. Real Options (p.801)
+
+----------------------------
+## Martin Haugh
+----------------------------
+# Model Risk
+1. What do you think would happen to the value of the knock-out put option as sigma->inf?
+7. Down-and-out call prices seem to coincide for all models when the barrier is low relative to S[0]. Why is this?
+
+# Local Volatility, Stochastic Volatility and Jump-Diffusion Models
+
+# Monte Carlo Simulation
+1. Why could you use the value of the geometric Asian as a control variate for the arithmetic Asian? Do you think it would result in a substantial variance reduction?
+2. We can use antithetic variates to estimate the value of a knock-in call in the GBM model. Are we sure to get a variance reduction?
+3. We can use antithetic variates to price Asian options. In this case, however, we need to be a little careful generating the stock prices if we are to achieve a variance reduction. You might want to think about this yourself.
+
+# Simulating Stochastic Differential Equations
+4. Characterize the discretization error that results from applying the Euler scheme to log(S[t]) when S[t] follows a geometric Brownian motion.
+
+
+--------------------------------
+## Bergomi
+--------------------------------
+1. Assume daily returns are r[i] = sigma[i] z[i] with iid N(0,1) z[i] and sigma[i] indep of z[i].
+a. Impact of kurtosis of r[i] on PNL of a delta-hedging strategy (discretely rebalanced).
+b. Assume auto-correlation function of sigma[i] is const*exp(-k * i). Impact of k.
+c. Impact of variance of sigma[i]^2.

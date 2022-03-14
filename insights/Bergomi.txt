@@ -1,0 +1,75 @@
+## Chapter 3: Forward Start Options
+- We are able to exactly gamma-hedge and vega-hedge the cliquet in the Black-Scholes model with time-dependent volatility, recalibrated daily to log-contracts. We need, hovewer, two adjustments: (a) to cover the vol-vol risk over [0,T], (b) to cover forward-smile risk at T. Practically, we would estimate these adjustments using a SV model. The forward smile risk and vol-vol risk can not be hedged with vanillas.
+- Forward implied vols for vanillas can not be locked in, log-contract vols can. Variance swaps ~ delta hedged log-contracts. 
+- Discrete forward variance models allow to control the term structure of forward skew and match the short starting smile. They have a control over the vol-vol and forward smile risks.
+- Cliquets are hedged by trading dynamically log-contracts. Carry PnL of a vega-hedged cliquet consists of (a) gamma PnL on forward volatility and (b) adjustment for forward smile risk (impl vol of log contract vs that of the payoff at hand).
+- LV misprices the vol-vol risk. Future volvol smaller than spot volvol.
+- LV misprices forward smile risk. Future skews are weaker than spot-starting skews.
+
+## SSR (Skew Stickiness Ratio)
+- SSR : regression coef of d(atmf vol) on d(ln S0). SSR=1 (same move) is sticky strike (atm moves along the smile) and SSR=0 (no move) is sticky moneyness (delta, smile moves with asset). Sticky delta is obseved in models with iid increments such as jump-diffusion. SSR is measured in units of ATMF skew (p.52 Bergomi SV).
+- ATMF skew is dsigma[K,T]/dln(K) at K = Fwd[T]. Long-term atmf skew for equity typically decays as 1/sqrt[T].
+
+## Chapter 5: Variance Swaps
+- Difference between log vols and VS vols is the measure of implied skewness of daily returns. When log contracts are illiquid we can not lock into this difference by trading vanillas. Index vol market makers use VS vol as a proxy for log vol. In liquid indices (SP500, EuroStoxx50) far otm puts are liquid and log vol is different from VS vol.
+- It makes no sense to price VS using a jump-diffusion or Levy model: it produces a skew using other mechanism.
+
+## Chapter 6: Heston
+- The drift of instantaneous variance is related with the initial slope of the variance curve.
+- ATMF skew in Heston model decays as 1/T.
+
+## Chapter 7: Forward Variance Models
+- Continuous forward variance models do not have separate handles for the vanilla smile/forward smile/vol-vol. The discrete forward variance model allows to separate them.
+- VIX futures can be modeled directly in the forward variance model.
+- In the DFV model we can choose: (a) ATMF skew indep of the ATMF VS vol as in the 2F CFV model; (b) ATMF skew proportional to the ATMF vol which mimics the 3/2 model for short maturities; (c) ATMF skew inversely proportional to the ATMF vol, which mimics the Heston model for short mats. Besides, we independently specify the spot-vol corrs, which control the spot smiles.
+- In the DFV model the prices of cliquets do not depend no more on the spot/vol corr, as the effects of the spot/vol corr and forward smile are separated in the model. Both factors contribute to the vanilla smile.
+- Options on realized variance (calls and puts) are naturally hedged with VS for the residual maturity. To hedge vega (and gamma) we add a continuum of VSs of intermediate maturities. A simple model is used and should be benchmarked against a 2F model.
+- Options on forward realized variance can not be priced by models taking as ingredient only the term structure of spot-starting VS vols. Vols of forward-starting vols are needed, which can not be backed from the spot starting ones in a model independent way.
+- Forward SP500 VS can be synthetiezed from VIX futures and options. Difference can be arbitraged away.
+- Discrete forward variance model should be employed to options involving VIX observations, depending on future skews or requiring explicit access to VIX futures or forward variances.
+
+
+# Chapter 8: SV smiles.
+- To order one in volvol, ATMF skew is determined by the covariance of spot and VS vols.
+- ATM skew ~ instantaneous covariance between the spot and the ATM volatility.
+- ATM curvature ~ long volvol, long <dspot,datmskew>, short atmskew^2
+- In time-homogeneous SV models future smiles are similar to spot smiles.
+- Upward sloping volvol smile makes the vanilla smile more convex near the money and less steep.
+
+# Chapter 9 : Linking SV statics and dynamics.
+- SSR characterises the model dynamics. For short T SSR has a universal value of 2 (except for jump-diffision which has SSR = 0 everywhere - sticky moneyness).
+- The characteristic exponent gamma of the spot/variance covariance function controls the decay of the ATMF skew. For gamma>1 (type I SV), S_T ~ 1/T and R_T -> 1 (sticky strike). For gamma < 1 (type II SV), S_T->1/T^gamma and R_t -> 2 - gamma. For market skews gamma ~ 1/2.
+- In LV models SSR starts from 2 and increases for longer maturities for indices.
+- SSR always starts from a model independent value of 2: the regression of ATMF vol on the spot is model-indep and is driven by the ATMF skew.
+- Spot/vol cross-gamma is of the main risks of exotic equity payoffs. To assess the conservativeness of the model we compare the model and the realized SSR.
+- Theta contribution is quantified by SSR. Long spot/vol xgamma should preferrably be priced using LV, short spot/vol xgamma using a SV model. 
+
+# Chapter 10: What causes equity smiles?
+- Unconditional and conditional distributions of daily returns exhibit fat tails, well approximated with a Student distribution.
+- Fat tails impact short maturities and otm vols. ATMF skews are hardly affected, they are predominantly the product of the covariance of spot and implied vols.
+- Products depending on daily returns (such as var swaps and daily cliquets) are sensitive to the effect of one-day smile.
+- In jump-diffusions the returns are not correlated, this is irrealistic. They are auto-correlated in SV models.
+
+
+## Chapter 12: LSV.
+- Future skews can be tuned. They translate to future break-even levels of spot/vol correlation. 
+- LSV is suited to price and risk-manage path-dependent payoffs involving spot observations.
+- The price should not depend on the state variables of SV. Otherwise, spurious contributions to PnL will appear causing the PnL leakage. The Heston model does not satisfy it.
+
+
+# Insights
+- We can hedge using implied vol for any convex payoff. We are not limited to fixed strike.
+- Replicating weight is the second derivative of the payoff. Weight[log] = 1/x^2, weight[xlogx] = 1/x.
+- Non-tradables aquire a drift in the RN measure reflecting the cost of financing a delta hedged directed position in the asset.
+- No-arbitrage requirement in terms of local vols: they are real. But writing a market model for them will lead to non-local drifts (too expensive).
+- BS implied vols are implied vols for forwards. The implied vols for spots need a first order adjustment in interest rate volatility: Vol[Spot] = Vol[Fwd] - Corr[Spot,Rate]/2 * Vol[Rate] * T. (Bergomi SV 5.8)
+- When IR are stochastic, forget about RN measure and switch to T-forward measure.
+- Short dated options have more gamma exposure, long dated more vega exposure. Hedging gamma with a vanilla we transfer the exposure from gamma to vega (realized vol -> implied vol). StochVol models are needed to model the dynamics of implied vols rather then realized vol.
+- In a delta-hedged position: for very short options long tails dominate in the PnL variance, for long dated options vol of realized vol and correlation of future realized volatilities dominate.
+- Delta is rehedged daily, vega is less often due to larger bid-off spreads.
+- Using futures to delta hedge can reduce transaction costs. OTC FX option trading involves the delta hedged option. Trades are delta-neutral.
+- When pricing a forward vol/skew product, it is important which mechanism generates drives the smile. For daily cliquets fat tails would contribute (present in jump-diffusion) but for long cliquets it would be principally the covariance between the spot and vol (skew) and volvol (smile). KO seem to depend on the whole term structure of smiles, but mostly at the expected stopping time.
+
+# Insights 11.04.2021
+- Forward variances are driftless: the exposure can be delta hedged by a VS calendar spread with no cash borrowind or lending involved. Drift reflects funding.
+

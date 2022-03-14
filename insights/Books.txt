@@ -1,0 +1,76 @@
+v Algebra
+    v Atiyah, MacDonald, Introduction to commutative algebra, Chapters 1 (rings) and 2 (modules)
+    v Pavel Etingof, Introduction to representation theory http://math.mit.edu/~etingof/replect.pdf
+    > Gelfand, Manin, Methods of homological algebra, Chapter III (derived categories and functors)
+    > Jon Brundan, Algebraic groups, Chapter 5 (structure of semisimple Lie algebras) http://pages.uoregon.edu/brundan/math681fall07/notes8.pdf
+    > Tate, Galois Cohomology
+
+v Analysis
+    v M. Spivak, Calculus on manifolds, Chapters 4 (differential forms, Stokes) and 5 (submanifolds of R^d and calculus on them)
+    > A. Ritter, Morse homology (including analysis on Banach manifolds) http://people.maths.ox.ac.uk/ritter/morse-cambridge.html
+    > N. Nowaczyk, Laplacian on Riemannian manifolds and Hodge decomposition http://math.nikno.de/sites/default/files/hodge.pdf
+    > Shabat, Introduction to complex analysis II, Chapter IV (d-bar equation, Cech cohomology)
+    ^ D. Salamon, Lectures on Floer homology (symplectic case) https://people.math.ethz.ch/~salamon/PREPRINTS/floer.pdf
+    ^ M. Kashiwara, D-modules and microlocal calculus, Introduction (intuition behind D-modules)
+
+v Geometry
+    v do Carmo, Riemannian geometry
+    v G. Springer, Introduction to Riemann surfaces
+    v Ulf Persson, Divisors and line bundles (p.2 line bundles, p.1 divisors, p.2 Cech cohomology, p.3 linear systems, p.3-4 line bundles and divisors) http://www.math.chalmers.se/~ulfp/Teaching/ag2.pdf
+    > O. Forster, Lectures on Riemann surfaces, Chapters 1.10-11 (complex ODEs and monodromy), 3.28 (group cohomology in complex setting), 3.31 (Riemann-Hilbert problem)
+    > Jose Figueroa-O'Farrill, Gauge theory, Lectures 1 and 2 (principal bundles, connections, exterior covariant derivative) https://empg.maths.ed.ac.uk/Activities/GT/
+    > T. Lovering, Essay on intuition of sheaves https://tlovering.files.wordpress.com/2011/04/sheaftheory.pdf
+    > S. Guillermou, Introduction aux faisceaux pervers (derived category of sheaves) https://www-fourier.ujf-grenoble.fr/~guillerm/fp.ps
+    > Moroianu, Lectures on Kahler geometry, Chapters 1 (complex geometry), 2 (Kahler geometry), 3 (Hodge-Dolbeault theory), http://moroianu.perso.math.cnrs.fr/tex/kg.pdf
+    > Lawson, Michelsohn, Spin geometry, Appendix B (classifying spaces and characteristic classes)
+    > J. F. Adams, Infinite loop spaces, Chapter 1 (infinite loop spaces, spectra)
+    ^ Nigel Hitchin, Lectures on special lagrangian submanifolds, Chapter 1 (gerbes and connections) http://arxiv.org/pdf/math/9907034.pdf
+    ^ Markus Upmeier, Introduction to ordinary differential cohomology https://www.math.uni-augsburg.de/prof/diff/arbeitsgruppe/upmeier/notes/archiv/intro-ord-diff-coh.pdf
+
+v Operations research and finance
+  v J. R. Norris, Markov Chains, 1997
+  v J. C. Hull, Options, futures, and other derivatives, 2018
+  v A. Etheridge, A course in financial calculus, 2002 (stochastic calculus, Black-Scholes model)
+  v G. Cornuéjols et al, Optimization methods in Finance, 2018
+  v R. Gibbons, A Primer in Game Theory, Prentice Hall, 1992 (normal form games, dynamic games, repeated games)
+ 
+v Quantitative finance and ML
+  v N. Taleb, Dynamic Hedging
+  v L. Bergomi, Stochastic volatility modeling
+  v M. L. de Prado, Advances in financial ML
+  v P. H. Labordere, Analysis, Geometry, and Modeling in Finance (Chapter 11: Wiener Chaos Expansion, Appendix B: Monte Carlo Methods and Hopf Algebra)
+
+
+> Modular forms
+  v Brunier, J. H. et al, The 1-2-3 of Modular Forms, Elliptic Modular Forms and Their Applications (by D. Zagier)
+
+> Category theory
+    v Pierre Shapira, Algebra and Topology, Chapter 1 (categories, functors, representable functors, Yoneda) https://webusers.imj-prg.fr/~pierre.schapira/lectnotes/AlTo.pdf
+    v Ravi Vakil, Foundations of algebraic geometry, Chapters 1.3 (universal properties), 1.4 (limits-colimits) http://math.stanford.edu/~vakil/216blog/
+    > Greg Fiedman, Elementary illustrated introduction to simplicial sets http://arxiv.org/abs/0809.4221
+    > D. C. Cisinski, Categories superieures et theorie des topos http://www.math.univ-toulouse.fr/~dcisinsk/1097.pdf
+ 
+
+^ Classification and deformation of mathematical structures
+    v Sammy A. Soulimani, Kodaira-Spencer theory of deformations of complex manifolds http://www.math.unipd.it/~algant/theses/SoulimaniTh.pdf
+    v Kontsevich, Deformation theory http://www.math.uchicago.edu/~mitya/langlands/kontsdef.ps
+    v Manetti, DGLAs, Chapter 7.6 (deformation functors) http://www1.mat.uniroma1.it/people/manetti/DT2011/DGLA.pdf
+    v Annel, Why deformations are cohomological http://thales.math.uqam.ca/~anelm/mat/doc/deformation.pdf
+    v What is a moduli stack? http://mathoverflow.net/a/15207/17896
+
+^ Mathematical physics
+    v R.J. Henderson, S.G. Rajeev, Renormalised path integral in quantum mechanics, sections 1 and 2 (ultraviolet divergence and renormalisation of point scatterers in 2d) https://aip.scitation.org/doi/10.1063/1.531967
+    v Jose Figueroa-O'Farrill, Gauge theory, Lectures 3 (Yang-Mills equations), 4 (instantons), 5 (instanton moduli space) https://empg.maths.ed.ac.uk/Activities/GT/
+    v Litvinov, Maslov dequantization and tropical mathematics http://arxiv.org/abs/math/0507014
+    v Ludwig Faddeev, QFT, Lectures 1, 2 (Weyl and holomorphic quantization) https://www.math.ias.edu/QFT/fall/
+    v Jacob Lurie, On the classification of topological field theories (2010): Chapter 1 (TFTs in low dimensions)
+    v Kevin Costello, Topological conformal field theories and Calabi-Yau categories (2006): Introduction (role of Calabi-Yau A_infinity categories and TCFTs), Chapters 1.1, 1.2 (open-closed TFT and TCFT)
+
+
+
+
+# Some other great articles
+- Vladimir Arnold, Characteristic class entering in quantization conditions, Funct. Anal. its Appl. 1967 http://www.mathnet.ru/links/4f3b437b2acebc82e0ec45671d919d66/faa2802.pdf # cool definition of Maslov index
+
+
+
