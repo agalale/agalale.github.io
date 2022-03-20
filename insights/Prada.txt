@@ -1,10 +1,10 @@
 AFML
 
 # 1.
-- A common error is to believe that feature analysts develop strategies. Instead, feature analysts collect and catalogue libraries of findings that can be useful to a multiplicity of stations.
+- A common error is to believe that feature analysts develop strategies. Instead, feature analysts collect and catalogue libraries of findings that can be useful to a multiplicity of stations.
 - Features may be discovered by a black box, but the strategy is developed in a white box. In particular, a theory must identify the economic mechanism that causes an agent to lose money to us. Is it a behavioral bias? Asymmetric information? Regulatory constraints?
 - Backtest results are communicated to management and not shared with anyone else
-- Amateurs develop individual strategies, believing that there is such a thing as a magical formula for riches. In contrast, professionals develop methods to mass-produce strategies.
+- Amateurs develop individual strategies, believing that there is such a thing as a magical formula for riches. In contrast, professionals develop methods to mass-produce strategies.
 - Test features for normality, stationarity, homoscedasticity
 
 # 2. Data
@@ -83,7 +83,7 @@ AFML
 # 7. Cross-validation.
 - CV will contribute to overfitting through hyper-parameter tuning
 - Purging: if a test sample falls between train samples and contains (p[t]-p[t-10]) feature, remove the [t-10] row from the training set.
-- Embargo: since financial features often incorporate series that exhibit serial correlation (like ARMA processes), we should eliminate from the training set observations that immediately follow an observation in the testing set.
+- Embargo: since financial features often incorporate series that exhibit serial correlation (like ARMA processes), we should eliminate from the training set observations that immediately follow an observation in the testing set.
 
 # 8. Feature selection
 - It takes 20 iterations of type data -> ML -> backtest on the same data to discover a <5% false positive strategy (standard significance level)
