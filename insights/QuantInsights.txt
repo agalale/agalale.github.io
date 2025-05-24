@@ -75,3 +75,8 @@ Negative carry in an asset: forward price for the period t+1 is higher than the 
 # Jumps
 - Markets do jump. Hence, perfect detlta hedging is impossible. Hence, markets are incomplete.
 - Preferences and not arbitrage determine prices. Arbitrage gives bounds.
+
+# Skew trading
+- Buy/sell atm delta hedged straddles - pure vega trade (realized vs implied vol)
+- Buy/sell 25Delta C/P, delta hedged when needed - vanna trade
+- Same but fly - vol of vol (volga), not risky, curvature
