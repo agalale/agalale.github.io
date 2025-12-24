@@ -70,6 +70,10 @@ v Quantitative finance and ML
 - Vladimir Arnold, Characteristic class entering in quantization conditions, Funct. Anal. its Appl. 1967 http://www.mathnet.ru/links/4f3b437b2acebc82e0ec45671d919d66/faa2802.pdf # cool definition of Maslov index
 
 # Quant
+- Stefan Schlamp, linkedin blog
 - Almgren, Price signals in trade execution https://www.epfl.ch/schools/cdm/wp-content/uploads/2019/11/Slides-Robert-Almgren.pdf
 - hftbacktest project https://hftbacktest.readthedocs.io/en/v1.8.4/
+- Optiver, Low latency programming https://smallake.kr/wp-content/uploads/2023/04/When-a-Microsecond-Is-an-Eternity-Carl-Cook-CppCon-2017.pdf
+- Eric Rigtorp, https://rigtorp.se/cpp-best-practices/
+- Deutsche Boerse, Insights into T7 design https://www.eurex.com/resource/blob/48918/4f724c9415d2731cfb27295db6269c9c/data/presentation-insights-into-trading-system-dynamics.pdf
 
