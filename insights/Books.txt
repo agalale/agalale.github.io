@@ -76,4 +76,4 @@ v Quantitative finance and ML
 - Optiver, Low latency programming https://smallake.kr/wp-content/uploads/2023/04/When-a-Microsecond-Is-an-Eternity-Carl-Cook-CppCon-2017.pdf
 - Eric Rigtorp, https://rigtorp.se/cpp-best-practices/
 - Deutsche Boerse, Insights into T7 design https://www.eurex.com/resource/blob/48918/4f724c9415d2731cfb27295db6269c9c/data/presentation-insights-into-trading-system-dynamics.pdf
-
+- Optiver, Order book https://github.com/CppCon/CppCon2024/blob/main/Presentations/When_Nanoseconds_Matter.pdf
